@@ -1,3 +1,5 @@
+import numpy as np
+
 def one_hot_encode(data):
     # data will be in this formate -> [[3], [4], [9]....]
     encoded_data = []
@@ -10,4 +12,4 @@ def one_hot_encode(data):
 
         encoded_data.append(encoded)
 
-    return encoded_data
+    return np.array(encoded_data)

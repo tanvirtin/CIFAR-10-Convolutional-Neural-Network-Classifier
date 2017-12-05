@@ -1,17 +1,14 @@
 from Preprocess import Preprocess
+from Model_A import Model_A
 
 def main():
-    data = Preprocess()
+    model_A = Model_A()
 
-    data.load_data()
+    model_A.train()
 
-    data.preprocess_images()
 
-    data.one_hot_encode_labels()
 
-    train_x, train_y = data.get_training_data()
 
-    print(train_y[0])
 
 if __name__ == "__main__":
     main()
