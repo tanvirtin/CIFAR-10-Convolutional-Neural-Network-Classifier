@@ -48,7 +48,7 @@ class Model_A(object):
         conv_layer_1_biased = tf.nn.bias_add(conv_layer_1_unbiased, conv_layer_1_bias_tf)
         conv_layer_1_activated = tf.nn.relu(conv_layer_1_biased)
 
-        # now I pool the convolutional layer by taking out the max value from specific windows
+        # now I pool the convolutional layer by taking out the max value from specific windows and the pool size is 2 by 2
         conv_layer_1_pooled = tf.nn.max_pool(conv_layer_1_activated, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding = 'SAME')
 
 
@@ -67,7 +67,7 @@ class Model_A(object):
         conv_layer_2_biased = tf.nn.bias_add(conv_layer_2_unbiased, conv_layer_2_bias_tf)
         conv_layer_2_activated = tf.nn.relu(conv_layer_2_biased)
 
-        # now I pool the convolutional layer by taking out the max value from specific windows
+        # now I pool the convolutional layer by taking out the max value from specific windows and the pool size is 2 by 2
         conv_layer_2_pooled = tf.nn.max_pool(conv_layer_2_activated, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding = 'SAME')
 
         #############################
@@ -85,7 +85,7 @@ class Model_A(object):
         conv_layer_3_biased = tf.nn.bias_add(conv_layer_3_unbiased, conv_layer_3_bias_tf)
         conv_layer_3_activated = tf.nn.relu(conv_layer_3_biased)
 
-        # now I pool the convolutional layer by taking out the max value from specific windows
+        # now I pool the convolutional layer by taking out the max value from specific windows and the pool size is 2 by 2
         conv_layer_3_pooled = tf.nn.max_pool(conv_layer_3_activated, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding = 'SAME')
 
 
@@ -125,9 +125,9 @@ class Model_A(object):
 
         fully_connected_layer_2_dropped = tf.nn.dropout(fully_connected_layer_2_activated, keep_prob)
 
-        ####################################
-        #  output layer connected layer 1  #
-        ####################################
+        ##################
+        #  logits layer  #
+        ##################
 
         output_layer_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_2_dropped.get_shape().as_list()[1], 10], stddev = 0.05, mean = 0.0))
 
