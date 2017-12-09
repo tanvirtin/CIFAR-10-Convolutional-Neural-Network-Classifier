@@ -48,19 +48,19 @@ chart for both Model-A and Model-B is provided below.
 The x-axis of both the graphs is epochs and the y-axis is the accuracy orcost.
 
 
-###Computational Graph Model-A
+##Computational Graph Model-A
 
 
-###Model-A Accuracy vs Epochs
+##Model-A Accuracy vs Epochs
 
-###Model-A Cost vs Epochs
-
-
-###Computational Graph Model-B
+##Model-A Cost vs Epochs
 
 
-###Model-B Accuracy vs Epochs
+##Computational Graph Model-B
 
-###Model-B Cost vs Epochs
+
+##Model-B Accuracy vs Epochs
+
+##Model-B Cost vs Epochs
 
 
