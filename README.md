@@ -1,6 +1,7 @@
 In order to classify the CIFAR-10 dataset I made two convolutional neural network models, which are named Model-A and Model-B.
-
+```
 The architecture of Model-A is as follows:
+```
 1) Convolutional Layer 1 - 3× 3 ×12 - strides - 1× 1
 2) Activated by Relu
 3) Max pooling Layer - 2× 2
@@ -23,7 +24,9 @@ The architecture of Model-A is as follows:
 20) Output layer - 10 neurons
 21) Activated by Softmax
 
+```
 The architecture of Model-B is as follows:
+```
 1) Convolutional Layer 1 - 3× 3 ×24 - strides - 1× 1
 2) Activated by Relu
 3) Max pooling Layer - 2× 2
@@ -47,20 +50,28 @@ The computational graphs, cost vs epochs chart and accuracy vs epochs
 chart for both Model-A and Model-B is provided below.
 The x-axis of both the graphs is epochs and the y-axis is the accuracy orcost.
 
+<p align="center">
+Computational Graph Model-A
+</p>
 
-### Computational Graph Model-A
+<p align="center">
+Model-A Accuracy vs Epochs
+</p>
 
+<p align="center">
+Model-A Cost vs Epochs
+</p>
 
-### Model-A Accuracy vs Epochs
+<p align="center">
+Computational Graph Model-B
+</p>
 
-### Model-A Cost vs Epochs
+<p align="center">
+Model-B Accuracy vs Epochs
+</p>
 
-
-### Computational Graph Model-B
-
-
-### Model-B Accuracy vs Epochs
-
-### Model-B Cost vs Epochs
+<p align="center">
+Model-B Cost vs Epochs
+</p>
 
 
