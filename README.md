@@ -50,26 +50,32 @@ The computational graphs, cost vs epochs chart and accuracy vs epochs
 chart for both Model-A and Model-B is provided below.
 The x-axis of both the graphs is epochs and the y-axis is the accuracy orcost.
 
+![modelacg](https://user-images.githubusercontent.com/25164326/33798870-a0f9921e-dcee-11e7-811c-c347533d9c61.png)
 <p align="center">
 Computational Graph Model-A
 </p>
 
+![modelaacc](https://user-images.githubusercontent.com/25164326/33798871-a2b72134-dcee-11e7-8bd8-536b3ab50dba.PNG)
 <p align="center">
 Model-A Accuracy vs Epochs
 </p>
 
+![modelaloss](https://user-images.githubusercontent.com/25164326/33798872-a746790c-dcee-11e7-8259-2c319b98131f.PNG)
 <p align="center">
 Model-A Cost vs Epochs
 </p>
 
+![modelbcg](https://user-images.githubusercontent.com/25164326/33798874-a9f7492e-dcee-11e7-94d1-c34c4ab2e546.png)
 <p align="center">
 Computational Graph Model-B
 </p>
 
+![modelbacc](https://user-images.githubusercontent.com/25164326/33798876-ac1719be-dcee-11e7-899a-1062e28eb0e1.PNG)
 <p align="center">
 Model-B Accuracy vs Epochs
 </p>
 
+![modelbloss](https://user-images.githubusercontent.com/25164326/33798877-ada07730-dcee-11e7-86f6-c174ae1843cb.PNG)
 <p align="center">
 Model-B Cost vs Epochs
 </p>
