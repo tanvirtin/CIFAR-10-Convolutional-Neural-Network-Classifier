@@ -1,3 +1,7 @@
+'''
+Author: Md. Tanvir Islam
+'''
+
 import tensorflow as tf
 import numpy as np
 import random
@@ -29,11 +33,11 @@ class Model_A(object):
 
     def create_model(self):
 
-        x = tf.placeholder(tf.float32, shape = [None, self.row, self.col, self.channel], name = "x")
+        x = tf.placeholder(tf.float32, shape = [None, self.row, self.col, self.channel], name = "inputs")
 
-        y = tf.placeholder(tf.float32, shape = [None, self.classes], name = "y")
+        y = tf.placeholder(tf.float32, shape = [None, self.classes], name = "outputs")
 
-        keep_prob = tf.placeholder(tf.float32, name = "keep_prob")
+        keep_prob = tf.placeholder(tf.float32, name = "keep-prob")
 
         #############################
         #    Convolutional layer 0  #
@@ -41,9 +45,9 @@ class Model_A(object):
         num_filters_l0 = 12
         # tf variable for weights in the convolutional layer
         #                                                               3 since our image has 3 channels
-        conv_layer_0_weights_tf = tf.Variable(tf.truncated_normal([3, 3, self.channel, num_filters_l0], stddev=0.05, mean=0.0)) # 24 is the number of filteres being applied
+        conv_layer_0_weights_tf = tf.Variable(tf.truncated_normal([3, 3, self.channel, num_filters_l0], stddev=0.05, mean=0.0), name = "conv-layer-1-weights") # 24 is the number of filteres being applied
         # tf variable for the bias weights
-        conv_layer_0_bias_tf = tf.Variable(tf.zeros(num_filters_l0)) # 24 is the number of outputs produced by the convolutional layer
+        conv_layer_0_bias_tf = tf.Variable(tf.zeros(num_filters_l0), name = "conv1-layer-1-biases") # 24 is the number of outputs produced by the convolutional layer
 
         # x is the input layer
         conv_layer_0_unbiased = tf.nn.conv2d(x, conv_layer_0_weights_tf, strides=[1, 1, 1, 1], padding = 'SAME')
@@ -61,9 +65,9 @@ class Model_A(object):
         num_filters_l1 = 24
         # tf variable for weights in the convolutional layer
         #                                                               3 since our image has 3 channels
-        conv_layer_1_weights_tf = tf.Variable(tf.truncated_normal([3, 3, num_filters_l0, num_filters_l1], stddev=0.05, mean=0.0)) # 24 is the number of filteres being applied
+        conv_layer_1_weights_tf = tf.Variable(tf.truncated_normal([3, 3, num_filters_l0, num_filters_l1], stddev=0.05, mean=0.0), name = "conv-layer-2-weights") # 24 is the number of filteres being applied
         # tf variable for the bias weights
-        conv_layer_1_bias_tf = tf.Variable(tf.zeros(num_filters_l1)) # 24 is the number of outputs produced by the convolutional layer
+        conv_layer_1_bias_tf = tf.Variable(tf.zeros(num_filters_l1), name = "conv-layer-2-biases") # 24 is the number of outputs produced by the convolutional layer
 
         # x is the input layer
         conv_layer_1_unbiased = tf.nn.conv2d(conv_layer_0_pooled, conv_layer_1_weights_tf, strides=[1, 1, 1, 1], padding = 'SAME')
@@ -81,9 +85,9 @@ class Model_A(object):
         num_filters_l2 = 48
         # tf variable for weights in the convolutional layer
         #                                                               x.get_shape().as_list()[3] should be 24 since the filtered image spitted out by the previous convolutional layer should have 24 images all with 1 channel or 1 image with 24 channel
-        conv_layer_2_weights_tf = tf.Variable(tf.truncated_normal([3, 3, num_filters_l1, num_filters_l2], stddev=0.05, mean=0.0)) # 48 is the number of filters being applied
+        conv_layer_2_weights_tf = tf.Variable(tf.truncated_normal([3, 3, num_filters_l1, num_filters_l2], stddev=0.05, mean=0.0), name = "conv-layer-3-weights") # 48 is the number of filters being applied
         # tf variable for the bias weights
-        conv_layer_2_bias_tf = tf.Variable(tf.zeros(num_filters_l2)) # 48 is the number of outputs produced by the convolutional layer
+        conv_layer_2_bias_tf = tf.Variable(tf.zeros(num_filters_l2), name = "conv-layer-3-biases") # 48 is the number of outputs produced by the convolutional layer
 
         # x is the input layer
         conv_layer_2_unbiased = tf.nn.conv2d(conv_layer_1_pooled, conv_layer_2_weights_tf, strides=[1, 1, 1, 1], padding = 'SAME')
@@ -99,9 +103,9 @@ class Model_A(object):
 
         num_filters_l3 = 96
         # tf variable for weights in the convolutional layer
-        conv_layer_3_weights_tf = tf.Variable(tf.truncated_normal([3, 3, num_filters_l2, num_filters_l3], stddev=0.05, mean=0.0))
+        conv_layer_3_weights_tf = tf.Variable(tf.truncated_normal([3, 3, num_filters_l2, num_filters_l3], stddev=0.05, mean=0.0), name = "conv-layer-4-weights")
         # tf variable for the bias weights
-        conv_layer_3_bias_tf = tf.Variable(tf.zeros(num_filters_l3)) # 48 is the number of outputs produced by the convolutional layer
+        conv_layer_3_bias_tf = tf.Variable(tf.zeros(num_filters_l3), name = "conv-layer-4-biases") # 48 is the number of outputs produced by the convolutional layer
 
         # x is the input layer
         conv_layer_3_unbiased = tf.nn.conv2d(conv_layer_2_pooled, conv_layer_3_weights_tf, strides=[1, 1, 1, 1], padding = 'SAME')
@@ -123,10 +127,10 @@ class Model_A(object):
         #    fully connected layer 1  #
         ###############################
 
-        fully_connected_layer_1_weights_tf = tf.Variable(tf.truncated_normal([flatten_layer_1.get_shape().as_list()[1], fc_neurons], stddev = 0.05, mean = 0.0))
+        fully_connected_layer_1_weights_tf = tf.Variable(tf.truncated_normal([flatten_layer_1.get_shape().as_list()[1], fc_neurons], stddev = 0.05, mean = 0.0), name = "fully-connected-layer-1-weights")
 
         # one bias for each layer therefore 512 biasses
-        fully_connected_layer_1_bias_tf = tf.Variable(tf.zeros(512))
+        fully_connected_layer_1_bias_tf = tf.Variable(tf.zeros(512), name = "fully-connected-layer-1-biases")
 
         fully_connected_layer_1_output = tf.add(tf.matmul(flatten_layer_1, fully_connected_layer_1_weights_tf), fully_connected_layer_1_bias_tf)
 
@@ -138,10 +142,10 @@ class Model_A(object):
         #    fully connected layer 2  #
         ###############################
 
-        fully_connected_layer_2_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_1_dropped.get_shape().as_list()[1], fc_neurons], stddev = 0.05, mean = 0.0))
+        fully_connected_layer_2_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_1_dropped.get_shape().as_list()[1], fc_neurons], stddev = 0.05, mean = 0.0), name = "fully-connected-layer-2-weights")
 
         # one bias for each layer therefore 512 biasses
-        fully_connected_layer_2_bias_tf = tf.Variable(tf.zeros(512))
+        fully_connected_layer_2_bias_tf = tf.Variable(tf.zeros(512), name = "fully-connected-layer-2-biases")
 
         fully_connected_layer_2_output = tf.add(tf.matmul(fully_connected_layer_1_dropped, fully_connected_layer_2_weights_tf), fully_connected_layer_2_bias_tf)
 
@@ -153,10 +157,10 @@ class Model_A(object):
         #  logits layer  #
         ##################
 
-        output_layer_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_2_dropped.get_shape().as_list()[1], self.classes], stddev = 0.05, mean = 0.0))
+        output_layer_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_2_dropped.get_shape().as_list()[1], self.classes], stddev = 0.05, mean = 0.0), name = "output-layer-weights")
 
         # one bias for each layer therefore 10 biasses
-        output_layer_bias_tf = tf.Variable(tf.zeros(self.classes))
+        output_layer_bias_tf = tf.Variable(tf.zeros(self.classes), name = "output-layer-biases")
 
         # logits also known as the output of the model
         logits = tf.add(tf.matmul(fully_connected_layer_2_dropped, output_layer_weights_tf), output_layer_bias_tf)

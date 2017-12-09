@@ -1,3 +1,7 @@
+'''
+Author: Md. Tanvir Islam
+'''
+
 from Model_A import Model_A
 import tensorflow as tf
 import numpy as np
@@ -14,11 +18,11 @@ class Model_B(Model_A):
 
     def create_model(self):
 
-        x = tf.placeholder(tf.float32, shape = [None, self.row, self.col, self.channel], name = "x")
+        x = tf.placeholder(tf.float32, shape = [None, self.row, self.col, self.channel], name = "inputs")
 
-        y = tf.placeholder(tf.float32, shape = [None, self.classes], name = "y")
+        y = tf.placeholder(tf.float32, shape = [None, self.classes], name = "outputs")
 
-        keep_prob = tf.placeholder(tf.float32, name = "keep_prob")
+        keep_prob = tf.placeholder(tf.float32, name = "keep-prob")
 
         #############################
         #    Convolutional layer 1  #
@@ -26,9 +30,9 @@ class Model_B(Model_A):
 
         num_filters_l1 = 24
         # tf variable for weights in the convolutional layer
-        conv_layer_1_weights_tf = tf.Variable(tf.truncated_normal([2, 2, self.channel, num_filters_l1], stddev=0.01, mean=0.0)) # 24 is the number of filters being applied
+        conv_layer_1_weights_tf = tf.Variable(tf.truncated_normal([2, 2, self.channel, num_filters_l1], stddev=0.01, mean=0.0), name = "conv-layer-1-weights") # 24 is the number of filters being applied
         # tf variable for the bias weights
-        conv_layer_1_bias_tf = tf.Variable(tf.zeros(num_filters_l1))
+        conv_layer_1_bias_tf = tf.Variable(tf.zeros(num_filters_l1), name = "conv-layer-1-biases")
 
         # x is the input layer
         conv_layer_1_unbiased = tf.nn.conv2d(x, conv_layer_1_weights_tf, strides=[1, 1, 1, 1], padding = 'SAME')
@@ -43,9 +47,9 @@ class Model_B(Model_A):
         num_filters_l2 = 24
 
         # tf variable for weights in the convolutional layer
-        conv_layer_2_weights_tf = tf.Variable(tf.truncated_normal([3, 3, num_filters_l1, num_filters_l2], stddev=0.01, mean=0.0)) # 24 is the number of filters being applied
+        conv_layer_2_weights_tf = tf.Variable(tf.truncated_normal([3, 3, num_filters_l1, num_filters_l2], stddev=0.01, mean=0.0), name = "conv-layer-2-weights") # 24 is the number of filters being applied
         # tf variable for the bias weights
-        conv_layer_2_bias_tf = tf.Variable(tf.zeros(num_filters_l2))
+        conv_layer_2_bias_tf = tf.Variable(tf.zeros(num_filters_l2), name = "conv-layer-2-biases")
 
         # x is the input layer
         conv_layer_2_unbiased = tf.nn.conv2d(conv_layer_1_pooled, conv_layer_2_weights_tf, strides=[1, 1, 1, 1], padding = 'SAME')
@@ -68,10 +72,10 @@ class Model_B(Model_A):
 
         fc_neurons = 512
 
-        fully_connected_layer_1_weights_tf = tf.Variable(tf.truncated_normal([num_filters_l2, fc_neurons], stddev = 0.01, mean = 0.0))
+        fully_connected_layer_1_weights_tf = tf.Variable(tf.truncated_normal([flatten_layer_1.get_shape().as_list()[1], fc_neurons], stddev = 0.01, mean = 0.0), name = "fully-connected-layer-1-weights")
 
         # one bias for each layer therefore 512 biasses
-        fully_connected_layer_1_bias_tf = tf.Variable(tf.zeros(fc_neurons))
+        fully_connected_layer_1_bias_tf = tf.Variable(tf.zeros(fc_neurons), name = "fully-connected-layer-1-biases")
 
         fully_connected_layer_1_output = tf.add(tf.matmul(flatten_layer_1, fully_connected_layer_1_weights_tf), fully_connected_layer_1_bias_tf)
 
@@ -85,10 +89,10 @@ class Model_B(Model_A):
 
         fc_neurons = 256
 
-        fully_connected_layer_2_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_1_dropped.get_shape().as_list()[1], fc_neurons], stddev = 0.01, mean = 0.0))
+        fully_connected_layer_2_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_1_dropped.get_shape().as_list()[1], fc_neurons], stddev = 0.01, mean = 0.0), name = "fully-connected-layer-1-weights")
 
         # one bias for each layer therefore 512 biasses
-        fully_connected_layer_2_bias_tf = tf.Variable(tf.zeros(fc_neurons))
+        fully_connected_layer_2_bias_tf = tf.Variable(tf.zeros(fc_neurons), name = "fully-connected-layer-2-weights")
 
         fully_connected_layer_2_output = tf.add(tf.matmul(fully_connected_layer_1_dropped, fully_connected_layer_2_weights_tf), fully_connected_layer_2_bias_tf)
 
@@ -100,10 +104,10 @@ class Model_B(Model_A):
         #  logits layer  #
         ##################
 
-        output_layer_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_2_dropped.get_shape().as_list()[1], self.classes], stddev = 0.01, mean = 0.0))
+        output_layer_weights_tf = tf.Variable(tf.truncated_normal([fully_connected_layer_2_dropped.get_shape().as_list()[1], self.classes], stddev = 0.01, mean = 0.0), name = "output-layer-weights")
 
         # one bias for each layer therefore 10 biasses
-        output_layer_bias_tf = tf.Variable(tf.zeros(self.classes))
+        output_layer_bias_tf = tf.Variable(tf.zeros(self.classes), name = "output-layer-biases")
 
         # logits also known as the output of the model
         logits = tf.add(tf.matmul(fully_connected_layer_2_dropped, output_layer_weights_tf), output_layer_bias_tf)
