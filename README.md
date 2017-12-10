@@ -43,7 +43,7 @@ The architecture of Model-B is as follows:
 14) Output layer - 10 neurons
 15) Activated by Softmax
 
-After training both the networks the clear observation was that size of thenetwork is important when it comes to accuracy. Model-A with more convo-
+After training both the networks the clear observation was that size of the network is important when it comes to accuracy. Model-A with more convo-
 lutional layer had a better accuracy than the Model-B with half the convo-lutional layers of Model-A.
 
 The computational graphs, cost vs epochs chart and accuracy vs epochs
